@@ -6,7 +6,7 @@ const getLesson = async (req, res) => {
     circle: circleNum,
     grade: gradeNum,
     lesson: lessonNum 
-  });
+  }, { _id: false });
   
   if (!lesson) {
     return res.status(404).json({error: 'Урока не существует'})
