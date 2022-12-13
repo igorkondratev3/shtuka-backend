@@ -1,8 +1,19 @@
 const User = require('../models/userModel');
+const RefreshToken = require('../models/refreshTokenModel');
 const jwt = require('jsonwebtoken');
 
 const createToken = (_id) => {
-  return  jwt.sign({_id}, process.env.SECRET, { expiresIn: '3d' })
+  return  jwt.sign({_id}, process.env.SECRET, { expiresIn: '15m' });
+}
+
+const createRefreshToken = (_id) => {
+  return  jwt.sign({_id}, process.env.SECRET, { expiresIn: '7d' }) //поменять секрет
+}
+
+const addRefreshTokenInDB = async (user_id, refreshToken) => {
+  const refreshTokenExists = await RefreshToken.findOne({ user_id }); 
+  if (refreshTokenExists) await RefreshToken.updateOne({ user_id }, {$set: { refreshToken }});
+  else await RefreshToken.create({user_id, refreshToken });
 }
 
 const loginUser = async (req, res) => {
@@ -11,11 +22,13 @@ const loginUser = async (req, res) => {
   try {
     const user = await User.login(email, password);
 
-    const token = createToken(user.id)
+    const token = createToken(user._id);
+    const refreshTokenValue = createRefreshToken(user._id);
+    await addRefreshTokenInDB(user._id, refreshTokenValue);
 
-    res.status(200).json({email, token})
+    res.status(200).json({email, token, refreshToken: refreshTokenValue});
   } catch (error) {
-      res.status(400).json({error: error.message})
+      res.status(400).json({error: error.message});
   }
 }
 
@@ -24,8 +37,12 @@ const signupUser = async (req, res) => {
 
   try {
     const user = await User.signup(email, password);
-    const token = createToken(user._id)
-    res.status(200).json({email, token})
+
+    const token = createToken(user._id);
+    const refreshTokenValue = createRefreshToken(user._id); //удалить uuid из проекта если не буду использовать
+    await addRefreshTokenInDB(user._id, refreshTokenValue); // лишние проверки в функции при создании учетной записи
+    
+    res.status(200).json({email, token, refreshToken: refreshTokenValue})
   } catch (error) {
     res.status(400).json({error: error.message})
   }

@@ -10,14 +10,19 @@ const requireAuth = async (req, res, next) => {
   }
 
   const token = authorization.split(' ')[1]; //так как токен будет получаться в формате типа "Bearer fdgfdgd.dfgdfgfd.dfgdfgdf",
+  
+  let _id;
+
   try {
-    const {_id} = jwt.verify(token, process.env.SECRET);
-    req.user = await User.findOne({ _id }).select('_id') //создаем объект user в запросе, чтобы следующие маршруты если они выполняются могли его использовать
-    next();
+    _id = jwt.verify(token, process.env.SECRET)._id;
   } catch (error) {
     console.log(error);
-    res.status(401).json({error: 'Request is not authorized'})
+    return res.status(401).json({error: 'Необходимо предоставить refreshToken'});
   }
+  
+  req.user = await User.findOne({ _id }).select('_id') //создаем объект user в запросе, чтобы следующие маршруты если они выполняются могли его использовать
+  if (!req.user) return res.status(401).json({error: 'Информация о пользователе отсутствует'});
+  next();
 };
 
 module.exports = requireAuth;

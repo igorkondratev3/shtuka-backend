@@ -32,11 +32,17 @@ const deleteTheoryNote = async (req, res) => {
     return res.status(404).json({error: 'Нет такого объекта'})
   }
 
-  const theoryNote = await TheoryNote.findOneAndDelete({_id: id});
+  const theoryNote = await TheoryNote.findOne({_id: id});
 
   if (!theoryNote) {
     return res.status(400).json({error: 'Нет такого объекта'});
   }
+
+  if (theoryNote.user_id !== req.user.id) { //почему-то работает id - получается строка хотя req.user это { _id: new ObjectId("6380a62a1f9b2cccd62a4907") } 
+    return res.status(400).json({error: 'Отсутствуют права'});
+  }
+
+  await TheoryNote.deleteOne({_id: id});
 
   res.status(200).json(theoryNote);
 }

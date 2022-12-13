@@ -19,7 +19,7 @@ const getLessons = async (req, res) => {
   const lessons = await Lesson.find({
     circle: circleNum,
     grade: gradeNum,
-  });
+  }, { _id: false });
   
   if (!lessons[0]) {
     return res.status(404).json({error: 'Уроков не существует'})

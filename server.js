@@ -6,6 +6,7 @@ const lessonRoutes = require('./routes/lessons');
 const theoryNoteRoutes = require('./routes/theoryNotes');
 const userRoutes = require('./routes/user');
 const additionalsRoutes = require('./routes/additionals');
+const refreshTokenRoutes = require('./routes/refreshToken');
 
 const app = express();
 
@@ -28,3 +29,4 @@ mongoose.connect(process.env.MONGO_URI)
   app.use('/lesson/theory-notes', theoryNoteRoutes);
   app.use('/user', userRoutes);
   app.use('/lesson/additionals', additionalsRoutes);
+  app.use('/refreshToken', refreshTokenRoutes);

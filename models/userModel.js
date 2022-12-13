@@ -4,7 +4,7 @@ const validator = require('validator');
 
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({ //создаем новую схему
+const userSchema = new Schema({
   email: {
     type: String,
     required: true,
