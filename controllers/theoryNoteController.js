@@ -47,8 +47,29 @@ const deleteTheoryNote = async (req, res) => {
   res.status(200).json(theoryNote);
 }
 
+const editTheoryNote = async (req, res) => {
+  const { _id, text, textStyle } = req.body;
+  
+  if (!mongoose.Types.ObjectId.isValid(_id)) {
+    return res.status(404).json({error: 'Нет такого объекта'})
+  }
+
+  const theoryNote = await TheoryNote.findOneAndUpdate({_id: _id}, {$set: { text, textStyle }}, {returnDocument: "after"})
+
+  if (!theoryNote) {
+    return res.status(400).json({error: 'Нет такого объекта'});
+  }
+
+  if (theoryNote.user_id !== req.user.id) { //почему-то работает id - получается строка хотя req.user это { _id: new ObjectId("6380a62a1f9b2cccd62a4907") } 
+    return res.status(400).json({error: 'Отсутствуют права'});
+  }
+
+  res.status(200).json(theoryNote);
+}
+
 module.exports = {
   createTheoryNote,
   getTheoryNotes,
-  deleteTheoryNote
+  deleteTheoryNote,
+  editTheoryNote
 }
