@@ -12,6 +12,33 @@ const createTheoryNote = async (req, res) => {
   }
 }
 
+const copyTheoryNote = async (req, res) => {
+ try {
+    const { _id } = req.body;
+    const user_id = req.user.id; 
+
+    if (!mongoose.Types.ObjectId.isValid(_id)) {
+      throw Error ('Нет такого объекта')
+    }
+
+    const theoryNote = await TheoryNote.findOne({ _id });  
+    
+    if (!theoryNote) {
+      throw Error ('Нет такого объекта');
+    }
+  
+    if (theoryNote.user_id !== user_id) {
+      throw Error ('Отсутствуют права');
+    }
+
+    const { circle, grade, lesson, text, textStyle } = theoryNote;
+    const copyTheoryNote = await TheoryNote.create({circle, grade, lesson, text, user_id, textStyle});
+    res.status(200).json(copyTheoryNote)
+  } catch(error) {
+    res.status(400).json({ error: error.message})
+  }
+}
+
 const getTheoryNotes = async (req, res) => {
   const { circleNum, gradeNum, lessonNum } = req.params;
   const user_id = req.user.id;
@@ -71,5 +98,6 @@ module.exports = {
   createTheoryNote,
   getTheoryNotes,
   deleteTheoryNote,
-  editTheoryNote
+  editTheoryNote,
+  copyTheoryNote
 }

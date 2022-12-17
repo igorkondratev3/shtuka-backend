@@ -22,10 +22,10 @@ userSchema.statics.signup = async function (email, password) {
     throw Error('Все поля должны быть заполнены')
   }
   if (!validator.isEmail(email)) {
-    throw Error('Email введен не корректно')
+     throw Error('Email введен не корректно')
   }
   if (!validator.isStrongPassword(password)) {
-    throw Error('Пароль недостаточно надежный')
+     throw Error('Пароль недостаточно надежный')
   }
 
   const emailExists = await this.findOne({ email });

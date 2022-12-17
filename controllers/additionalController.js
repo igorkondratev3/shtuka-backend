@@ -12,6 +12,33 @@ const createAdditional = async (req, res) => {
   }
 }
 
+const copyAdditional = async (req, res) => {
+  try {
+    const { _id } = req.body;
+    const user_id = req.user.id; 
+
+    if (!mongoose.Types.ObjectId.isValid(_id)) {
+      throw Error ('Нет такого объекта')
+    }
+
+    const additional = await Additional.findOne({ _id });  
+    
+    if (!additional) {
+      throw Error ('Нет такого объекта');
+    }
+  
+    if (additional.user_id !== user_id) {
+      throw Error ('Отсутствуют права');
+    }
+
+    const { circle, grade, lesson, address, name, description } = additional;
+    const copyAdditional = await Additional.create({circle, grade, lesson, user_id, address, name, description});
+    res.status(200).json(copyAdditional)
+   } catch(error) {
+     res.status(400).json({ error: error.message})
+   }
+ }
+
 const getAdditionals = async (req, res) => {
   const { circleNum, gradeNum, lessonNum } = req.params;
   const user_id = req.user.id;
@@ -71,5 +98,6 @@ module.exports = {
   createAdditional,
   getAdditionals,
   deleteAdditional,
-  editAdditional
+  editAdditional,
+  copyAdditional
 }
