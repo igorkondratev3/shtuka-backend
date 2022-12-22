@@ -48,6 +48,10 @@ const getAdditionals = async (req, res) => {
     lesson: lessonNum,
     user_id: user_id
   });
+
+  if (!additionals[0]) {
+    return res.status(404).json({error: 'Не удалось получить дополнительные материалы'})
+  }
   
   res.status(200).json(additionals);
 }

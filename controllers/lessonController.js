@@ -22,7 +22,7 @@ const getLessons = async (req, res) => {
   }, { _id: false });
   
   if (!lessons[0]) {
-    return res.status(404).json({error: 'Уроков не существует'})
+    return res.status(404).json({error: 'Не удалось получить уроки'})
   }
   res.status(200).json(lessons);
 }
