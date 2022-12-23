@@ -48,10 +48,6 @@ const getAdditionals = async (req, res) => {
     lesson: lessonNum,
     user_id: user_id
   });
-
-  if (!additionals[0]) {
-    return res.status(404).json({error: 'Не удалось получить дополнительные материалы'})
-  }
   
   res.status(200).json(additionals);
 }
@@ -69,7 +65,7 @@ const deleteAdditional = async (req, res) => {
     return res.status(400).json({error: 'Нет такого объекта'});
   }
 
-  if (additional.user_id !== req.user.id) { //почему-то работает id - получается строка хотя req.user это { _id: new ObjectId("6380a62a1f9b2cccd62a4907") } 
+  if (additional.user_id !== req.user.id) {
     return res.status(400).json({error: 'Отсутствуют права'});
   }
   

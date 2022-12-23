@@ -48,10 +48,6 @@ const getTheoryNotes = async (req, res) => {
     lesson: lessonNum,
     user_id: user_id
   });
-
-  if (!theoryNotes[0]) {
-    return res.status(404).json({error: 'Не удалось получить пометки'})
-  }
   
   res.status(200).json(theoryNotes);
 }
