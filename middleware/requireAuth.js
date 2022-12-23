@@ -16,7 +16,6 @@ const requireAuth = async (req, res, next) => {
   try {
     _id = jwt.verify(token, process.env.SECRET)._id;
   } catch (error) {
-    console.log(error);
     return res.status(401).json({error: 'Необходимо предоставить refreshToken'});
   }
   

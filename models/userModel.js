@@ -18,9 +18,6 @@ const userSchema = new Schema({
 
 userSchema.statics.signup = async function (email, password) {
 
-  if (!email || !password) {
-    throw Error('Все поля должны быть заполнены')
-  }
   if (!validator.isEmail(email)) {
      throw Error('Email введен не корректно')
   }
