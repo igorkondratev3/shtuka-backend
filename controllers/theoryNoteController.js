@@ -65,7 +65,7 @@ const deleteTheoryNote = async (req, res) => {
     return res.status(400).json({error: 'Нет такого объекта'});
   }
 
-  if (theoryNote.user_id !== req.user.id) { //почему-то работает id - получается строка хотя req.user это { _id: new ObjectId("6380a62a1f9b2cccd62a4907") } 
+  if (theoryNote.user_id !== req.user.id) {
     return res.status(400).json({error: 'Отсутствуют права'});
   }
 
@@ -87,7 +87,7 @@ const editTheoryNote = async (req, res) => {
     return res.status(400).json({error: 'Нет такого объекта'});
   }
 
-  if (theoryNote.user_id !== req.user.id) { //почему-то работает id - получается строка хотя req.user это { _id: new ObjectId("6380a62a1f9b2cccd62a4907") } 
+  if (theoryNote.user_id !== req.user.id) {
     return res.status(400).json({error: 'Отсутствуют права'});
   }
 

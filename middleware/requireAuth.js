@@ -9,7 +9,7 @@ const requireAuth = async (req, res, next) => {
     return res.status(401).json({error: 'Authorization token required'})
   }
 
-  const token = authorization.split(' ')[1]; //так как токен будет получаться в формате типа "Bearer fdgfdgd.dfgdfgfd.dfgdfgdf",
+  const token = authorization.split(' ')[1];
   
   let _id;
 

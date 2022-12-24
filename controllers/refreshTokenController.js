@@ -10,7 +10,7 @@ const deleteRefreshToken = async (req, res) => {
     return res.status(401).json({error: 'Необходим refreshToken'})
   }
 
-  const refreshToken = authorization.split(' ')[1]; //так как токен будет получаться в формате типа "Bearer fdgfdgd.dfgdfgfd.dfgdfgdf",
+  const refreshToken = authorization.split(' ')[1];
   await RefreshToken.deleteOne({ refreshToken });
   res.status(200).json({message: "End"}); 
 }
@@ -34,7 +34,7 @@ const updateTokens = async (req, res) => {
   if (!refreshTokenExists) return res.status(401).json({error: 'Необходимо повторно осуществить вход'});
 
   const newToken = jwt.sign({_id}, process.env.SECRET, { expiresIn: '15m' });
-  const newRefreshToken = jwt.sign({_id}, process.env.SECRET, { expiresIn: '7d' }) //поменять секрет
+  const newRefreshToken = jwt.sign({_id}, process.env.SECRET, { expiresIn: '7d' });
 
   await RefreshToken.updateOne({ user_id: _id }, {$set: { refreshToken: newRefreshToken }});
   

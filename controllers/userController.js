@@ -7,7 +7,7 @@ const createToken = (_id) => {
 }
 
 const createRefreshToken = (_id) => {
-  return  jwt.sign({_id}, process.env.SECRET, { expiresIn: '7d' }) //поменять секрет
+  return  jwt.sign({_id}, process.env.SECRET, { expiresIn: '7d' });
 }
 
 const addRefreshTokenInDB = async (user_id, refreshToken) => {
@@ -39,7 +39,7 @@ const signupUser = async (req, res) => {
     const user = await User.signup(email, password);
 
     const token = createToken(user._id);
-    const refreshTokenValue = createRefreshToken(user._id); //удалить uuid из проекта если не буду использовать
+    const refreshTokenValue = createRefreshToken(user._id);
     await addRefreshTokenInDB(user._id, refreshTokenValue); // лишние проверки в функции при создании учетной записи
     
     res.status(200).json({email, token, refreshToken: refreshTokenValue})
