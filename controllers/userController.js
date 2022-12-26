@@ -3,11 +3,11 @@ const RefreshToken = require('../models/refreshTokenModel');
 const jwt = require('jsonwebtoken');
 
 const createToken = (_id) => {
-  return  jwt.sign({_id}, process.env.SECRET, { expiresIn: '15m' });
+  return  jwt.sign({_id}, process.env.SECRET_FOR_TOKEN, { expiresIn: '15m' });
 }
 
 const createRefreshToken = (_id) => {
-  return  jwt.sign({_id}, process.env.SECRET, { expiresIn: '7d' });
+  return  jwt.sign({_id}, process.env.SECRET_FOR_REFRESH_TOKEN, { expiresIn: '7d' });
 }
 
 const addRefreshTokenInDB = async (user_id, refreshToken) => {
