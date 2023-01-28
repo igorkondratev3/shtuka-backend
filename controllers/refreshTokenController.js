@@ -1,4 +1,4 @@
-const RefreshToken = require('../models/refreshTokenModel');
+const RefreshToken = require('../models/refreshTokenModel.js');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 

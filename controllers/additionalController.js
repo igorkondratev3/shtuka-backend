@@ -1,4 +1,4 @@
-const Additional = require('../models/additionalModel');
+const Additional = require('../models/additionalModel.js');
 const mongoose = require('mongoose');
 
 const createAdditional = async (req, res) => {

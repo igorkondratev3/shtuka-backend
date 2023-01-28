@@ -1,4 +1,4 @@
-const TheoryNote = require('../models/theoryNoteModel');
+const TheoryNote = require('../models/theoryNoteModel.js');
 const mongoose = require('mongoose');
 
 const createTheoryNote = async (req, res) => {

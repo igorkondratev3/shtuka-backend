@@ -2,7 +2,7 @@ const express = require('express');
 const {  
   getLesson,
   getLessons
-} = require('../controllers/lessonController');
+} = require('../controllers/lessonController.js');
 const router = express.Router();
 
 router.get('/:circleNum/:gradeNum', getLessons);

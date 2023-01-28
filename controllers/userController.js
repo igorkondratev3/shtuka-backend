@@ -1,5 +1,5 @@
-const User = require('../models/userModel');
-const RefreshToken = require('../models/refreshTokenModel');
+const User = require('../models/userModel.js');
+const RefreshToken = require('../models/refreshTokenModel.js');
 const jwt = require('jsonwebtoken');
 
 const createToken = (_id) => {

@@ -1,4 +1,4 @@
-const Lesson = require('../models/lessonModel');
+const Lesson = require('../models/lessonModel.js');
 
 const getLesson = async (req, res) => {
   const { circleNum, gradeNum, lessonNum } = req.params;

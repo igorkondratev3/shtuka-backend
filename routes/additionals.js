@@ -5,8 +5,8 @@ const {
   deleteAdditional,
   editAdditional,
   copyAdditional
-} = require('../controllers/additionalController');
-const requireAuth = require('../middleware/requireAuth')
+} = require('../controllers/additionalController.js');
+const requireAuth = require('../middleware/requireAuth.js')
 const router = express.Router();
 
 router.use(requireAuth);

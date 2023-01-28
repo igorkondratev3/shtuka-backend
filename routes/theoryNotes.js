@@ -5,8 +5,8 @@ const {
   deleteTheoryNote,
   editTheoryNote,
   copyTheoryNote
-} = require('../controllers/theoryNoteController');
-const requireAuth = require('../middleware/requireAuth')
+} = require('../controllers/theoryNoteController.js');
+const requireAuth = require('../middleware/requireAuth.js')
 const router = express.Router();
 
 router.use(requireAuth);
